@@ -1,8 +1,80 @@
+import { useEffect, useState } from "react";
 import { Container } from "../../components/container";
+import { db } from "../../services/firebase/firebaseConnection"
+import { formatedBrl } from "../../utils/formatedPrice"
+import { 
+  collection,
+  getDocs,
+  query,
+  orderBy
+ } from "firebase/firestore";
+import { Link } from "react-router";
 
+export interface CarsProps {
+  id: string;
+  name: string;
+  year: string;
+  model: string;
+  uid: string;
+  price: string;
+  km: string;
+  city: string;
+  images: CarImagesProps[];
 
+}
 
+interface CarImagesProps {
+  uid: string;
+  name: string;
+  url: string;
+}
 export function Home() {
+
+  const [cars, setCars] = useState<CarsProps[]>([]);
+  const [loadImages, setLoadImages] = useState<string[]>([]);
+
+
+  useEffect(() => {
+    function loadCars() {
+      const carsRef = collection(db, "cars")
+      const queryRef = query(carsRef, orderBy("created", "desc"))
+
+      getDocs(queryRef)
+      .then((snapshot) => {
+        const listCars = [] as CarsProps[];
+
+
+        snapshot.forEach((doc) => {
+          listCars.push({
+            id: doc.id,
+            name: doc.data().name,
+            uid: doc.data().uid,
+            model: doc.data().model,
+            price: doc.data().price,
+            km: doc.data().km,
+            city: doc.data().city,
+            images: doc.data().images,
+            year: doc.data().year
+          })
+
+          setCars(listCars)
+        })
+
+      }).catch((err) => {
+        console.log(err);
+      })
+    }
+
+    loadCars();
+  }, [])
+
+  
+  function handleImageLoad(id: string) {
+    setLoadImages((allImages) => [...allImages, id])
+  }
+
+
+
   return (
     <Container>
       <section className="flex items-center justify-center mx-auto bg-white w-full max-w-4xl p-3 rounded-lg">
@@ -19,24 +91,33 @@ export function Home() {
       </h2>
 
       <main className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-        <section className="bg-white rounded-sm w-full">
-          <img src="https://th.bing.com/th/id/R.dc9c3d44ad0cc47ed17a4092c6b035ab?rik=TEp9TQDSMqvlbQ&pid=ImgRaw&r=0" 
-            alt="" 
-            className="w-full rounded-sm max-h-72 object-contain"
-          />
+      {cars.map((item) => (
+        <Link to={`/detail/${item.id}`} key={item.id}>
+          <section className="bg-white rounded-sm w-full">
+            <div 
+              className="w-full bg-slate-200 rounded-sm h-72"
+              style={{ display: loadImages.includes(item.id) ? "none" : "block"}}
+            >
 
-          <p className="text-center font-medium pt-2 pb-4 text-lg">Bmw 320i</p>
-          <div className="flex flex-col items-center w-full">
-            <strong>R$ 3.000.000</strong>
-            <span>Ano 2024/2024 | 23.000 km</span>
-          </div>
-
-          <div className="w-full border-1 border-neutral-200 my-2"></div>
-
-          <div className="w-full flex justify-center mb-4">
-            <span>Pesqueira - PE</span>
-          </div>
-        </section>
+            </div>
+            <img src={item.images[0].url}
+              alt={item.name}
+              className="w-full rounded-sm max-h-72 object-contain"
+              onLoad={ () => handleImageLoad(item.id)}
+              style={{ display: loadImages.includes(item.id) ? "block" : "none"}}
+            />
+            <p className="font-medium pt-2 pb-4 text-lg">{item.name}</p>
+            <div className="flex flex-col justify-center w-full">
+              <strong>{formatedBrl(item.price)}</strong>
+              <span>Ano {item.year} | {item.km} km</span>
+            </div>
+            <div className="w-full border-1 border-neutral-200 my-2"></div>
+            <div className="w-full flex mb-4">
+              <span>{item.city}</span>
+            </div>
+          </section>
+        </Link>
+      ))}
 
       </main>
     </Container>

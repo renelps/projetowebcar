@@ -5,16 +5,18 @@ import { useForm } from "react-hook-form";
 import { Input } from "../../../components/input/index";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ChangeEvent, useContext } from "react";
+import { FiTrash } from "react-icons/fi"
+import { ChangeEvent, useContext, useState } from "react";
 import { AuthContext } from "../../../context/authContext";
-import { v4 as uuidV4} from "uuid"
-import { storege  } from "../../../services/firebase/firebaseConnection"
+import { v4 as uuidV4} from "uuid";
+import { storage, db  } from "../../../services/firebase/firebaseConnection";
 import {
   ref,
   uploadBytes,
   getDownloadURL,
-  // deleteObject
+  deleteObject
  } from "firebase/storage"
+import { addDoc, collection} from "firebase/firestore"
 
 const schema = z.object({
   name: z.string().nonempty("O campo nome é obrigatório"),
@@ -31,23 +33,55 @@ const schema = z.object({
 
 type FormData = z.infer<typeof schema>
 
-// interface ImageItemProps {
-//   uid: string;
-//   name: string;
-//   email: string;
-// }
+interface ImageItemProps {
+  uid: string;
+  name: string;
+  previewUrl: string;
+  url: string;
+}
 
 export function New() {
-  // const [] = useState([])
+  const [carImages, setCarImages] = useState<ImageItemProps[]>([])
   const { user } = useContext(AuthContext)
-  const { register, handleSubmit, formState: { errors }, /*reset */} = useForm<FormData>({
+  const { register, handleSubmit, formState: { errors }, reset} = useForm<FormData>({
     resolver: zodResolver(schema),
     mode: "onChange"
   })
 
 
   function onSubmit(data: FormData) {
-    console.log(data)
+    if(carImages.length === 0) {
+      alert("Envie alguma imagem do seu carro")
+      return;
+    }
+
+    const carListImage = carImages.map((item) => {
+      return {
+        uid: item.name,
+        name: item.uid,
+        url: item.url
+      }
+    })
+
+    addDoc(collection(db, "cars"), {
+      name: data.name,
+      model: data.model,
+      city: data.city,
+      whatsapp: data.whatsapp,
+      price: data.price,
+      year: data.year,
+      km: data.km,
+      description: data.description,
+      created: new Date(),
+      owner: user?.name,
+      uid: user?.uid,
+      images: carListImage
+    }).then(() => {
+      reset()
+      setCarImages([])
+    }).catch((err) => {
+      console.log(err)
+    })
   }
 
   async function handleImage(event: ChangeEvent<HTMLInputElement>) {
@@ -56,14 +90,14 @@ export function New() {
 
 
       if(image.type === "image/jpeg" || image.type === "image/png") {
-        await hanndleUpload(image)
+        await handleUpload(image)
       }else {
         alert("A imagem só pode ser jpeg ou png")
       }
     }
   }
 
-  function hanndleUpload(image: File) {
+  function handleUpload(image: File) {
     if(!user?.uid) {
       return;
     }
@@ -71,16 +105,40 @@ export function New() {
     const currentUuid = user?.uid;
     const uidImage = uuidV4()
 
-    const uploadRef = ref(storege, `images/${currentUuid}/${uidImage}`)
+    const uploadRef = ref(storage, `images/${currentUuid}/${uidImage}`)
 
     uploadBytes(uploadRef, image)
     .then((snoopshot) => {
       getDownloadURL(snoopshot.ref).then((downloadUrl) => {
-        console.log(downloadUrl)
+        
+        const imageItem = {
+          name: uidImage,
+          uid: currentUuid,
+          previewUrl: URL.createObjectURL(image),
+          url: downloadUrl,
+        }
+
+        setCarImages((images) => [...images, imageItem])
+
+
+
       })
     }).catch((error) => {
       console.log("Error ao enviar a imagem", error)
     })
+  }
+
+  async function handleDeleteImage(item: ImageItemProps) {
+    const imagePath = `images/${item.uid}/${item.name}`
+
+    const imageRef = ref(storage, imagePath)
+
+    try {
+      await deleteObject(imageRef)
+      setCarImages(carImages.filter((image) => image.url !== item.url))
+    }catch(err) {
+      console.log("Erro ao deletar a imagem", err)
+    }
   }
 
   return (
@@ -96,6 +154,20 @@ export function New() {
             <input className="opacity-0 cursor-pointer" type="file" accept="image/*" onChange={handleImage} />
           </div>
         </button>
+
+        {carImages.map((item) => (
+          <div key={item.name} className="w-full h-32 flex items-center justify-center relativa">
+            <button className="absolute" onClick={() => handleDeleteImage(item)}>
+              <FiTrash size={28} color="#000"/>
+            </button>
+            <img 
+              src={item.previewUrl} 
+              alt={"foto do carro"} 
+              className="w-full rounded-md h-32 object-cover"
+            />
+
+          </div>
+        ))}
       </div>
 
       <div className="w-full bg-white p-3 rounded-md flex flex-col sm-flex-row gap-2 mt-2">

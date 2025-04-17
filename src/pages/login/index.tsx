@@ -8,7 +8,8 @@ import { signInWithEmailAndPassword, signOut } from 'firebase/auth';
 import { auth } from "../../services/firebase/firebaseConnection";
 import { BsLink } from 'react-icons/bs';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { Spinner } from '../../components/Spinner';
 
 const schema = z.object({
   email: z.string().email("O email tem que ser válido").nonempty("Nao pode deixar o email em branco"),
@@ -20,6 +21,9 @@ type FormData = z.infer<typeof schema>
 
 
 export function Login() {
+
+  const [loading, setLoading] = useState(false)
+  const [hasLoginError, setHasLoginError] = useState(false)
 
   useEffect(() => {
     async function handleLogout() {
@@ -39,12 +43,20 @@ export function Login() {
   })
 
   function onSubmit(data: FormData) {
+    setHasLoginError(false)
+    setLoading(true)
+
+
     signInWithEmailAndPassword(auth, data.email, data.password)
     .then(() => {
       console.log("Logado com sucesso")
+      setHasLoginError(false)
       navigate("/dashboard", { replace: true })
     }).catch((err) => {
       console.log("ERROR AO REGISTRAR", err)
+      setHasLoginError(true)
+    }).finally(() => {
+      setLoading(false)
     })
   }
 
@@ -87,9 +99,17 @@ export function Login() {
                   />
                 </div>
 
+                {hasLoginError && (
+                  <p className="text-red-500">
+                    Email ou senha inválidos.
+                  </p>
+                )}
 
-                <button className="py-2 bg-neutral-900 text-white font-medium rounded-sm cursor-pointer mt-2">
-                  Acessar
+                <button
+                  className="py-2 bg-neutral-900 text-white font-medium rounded-sm cursor-pointer mt-2 flex items-center justify-center gap-2 h-[42px]"
+                  disabled={loading}
+                >
+                  {loading ? <Spinner /> : "Acessar"}
                 </button>
               </form>
               <div className="flex items-center justify-center relative mt-5">

@@ -78,15 +78,17 @@ export function Dashboard() {
     item.images.map( async(images) => {
       const imagePath = `images/${images.uid}/${images.name}`
       const imageRef = ref(storage, imagePath)
-      console.log("Caminho da imagem:", imagePath);
+    
       try {
         await deleteObject(imageRef)
+        console.log("Imagem apagada com sucesso!!")
+        setCars(cars.filter(car => car.id !== item.id))
       }catch(err) {
         console.log(err)
-      }
+      } 
+      
     })
 
-    setCars(cars.filter(car => car.id !== item.id))
   }
 
 

@@ -14,21 +14,23 @@ export function Header() {
           <img src={logoImg} alt="logo" />
         </Link>
 
-      {!loadingAuth && signed && (
-        <Link to="login">
-          <div className="border-1 rounded-full p-1">
-            <FiUser size={24} color="#000000"/>
-          </div>
-        </Link>
-        )
-      }
+        <div>
+            {!loadingAuth && signed && (
+            <Link to="login">
+              <div className="border-1 rounded-full p-1">
+                <FiUser size={24} color="#000000"/>
+              </div>
+            </Link>
+            )
+          }
 
-      {!loadingAuth && !signed && (
-        <Link to="login">
-          <FiLogIn size={24} color="#000000"/>
-        </Link>
-        )
-      }
+          {!loadingAuth && !signed && (
+            <Link to="login">
+              <FiLogIn size={24} color="#000000"/>
+            </Link>
+            )
+          }
+        </div>
       </header>
     </div>
   )

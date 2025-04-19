@@ -7,6 +7,7 @@ import { Register } from './pages/register';
 import { Dashboard } from './pages/dashboard';
 import { New } from './pages/dashboard/new';
 import { Private } from './routes/private';
+import { EditCar } from './pages/editCar';
 
 const router = createBrowserRouter([
   {
@@ -27,6 +28,10 @@ const router = createBrowserRouter([
       {
         path: '/dashboard/new',
         element: <Private><New /></Private>
+      },
+      {
+        path: '/dashboard/edit/:id',
+        element: <Private><EditCar /></Private>
       }
     ]
   },

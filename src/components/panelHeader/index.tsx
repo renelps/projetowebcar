@@ -9,7 +9,7 @@ export function DashboardHeader() {
   }
   return (
     <Container>
-      <div className="flex items-center gap-4 w-full bg-red-600 py-1 px-2 text-white font-medium mb-4 rounded-md">
+      <div className="flex text-sm md:text-base items-center gap-4 w-full bg-red-600 py-1 px-2 text-white font-medium mb-4 rounded-md h-8">
         <Link to="/dashboard">
           dashboard
         </Link>

@@ -8,15 +8,15 @@ export function Header() {
   const {signed, loadingAuth} = useContext(AuthContext)
 
   return (
-    <div className="w-full items-center bg-white h-14 mb-4">
-      <header className="flex items-center justify-around">
+    <div className="w-full items-center bg-white h-14 mb-4 max-w-7xl px-2 mx-auto">
+      <header className="flex items-center justify-between">
         <Link to="/">
           <img src={logoImg} alt="logo" />
         </Link>
 
         <div>
             {!loadingAuth && signed && (
-            <Link to="login">
+            <Link to="/dashboard">
               <div className="border-1 rounded-full p-1">
                 <FiUser size={24} color="#000000"/>
               </div>
@@ -25,7 +25,7 @@ export function Header() {
           }
 
           {!loadingAuth && !signed && (
-            <Link to="login">
+            <Link to="/login">
               <FiLogIn size={24} color="#000000"/>
             </Link>
             )

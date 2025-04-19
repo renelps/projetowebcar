@@ -112,7 +112,7 @@ export function Login() {
                   {loading ? <Spinner /> : "Acessar"}
                 </button>
               </form>
-              <div className="flex items-center justify-center relative mt-5">
+              <div className="flex items-center justify-center relative mt-10">
                 <Link 
                   to="/register"
                   className="text-center text-blue-900 font-medium hover:border-b-1 border-blue-900 flex items-center absolute gap-2"

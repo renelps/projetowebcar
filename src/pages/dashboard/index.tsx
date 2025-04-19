@@ -7,6 +7,7 @@ import { db, storage } from "../../services/firebase/firebaseConnection";
 import { AuthContext } from "../../context/authContext";
 import { formatedBrl } from "../../utils/formatedPrice";
 import { ref, deleteObject } from "firebase/storage"
+import { Link } from "react-router";
 
 
 export interface CarsProps {
@@ -95,7 +96,9 @@ export function Dashboard() {
   return (
     <Container>
       <DashboardHeader />
-
+      {cars.length === 0 && (
+        <p className="text-zinc-600 text-center">Você ainda não adicionou nenhum carro.</p>
+      )}
       <main className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {cars.map((item) => (
           <section className="w-full bg-white rounded-md relative" key={item.id}>
@@ -120,7 +123,10 @@ export function Dashboard() {
 
             <div className="w-full bg-slate-300 mt-2 h-px"></div>
 
-            <p>{item.city}</p>
+            <div className="flex items-center justify-between mt-3 pb-2">
+              <p>{item.city}</p>
+              <Link to={`/dashboard/edit/${item.id}`} className="cursor-pointer bg-black text-white w-14 h-7 rounded-sm flex items-center justify-center">editar</Link>
+            </div>
           </section>
         ))}
       </main>

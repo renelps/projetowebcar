@@ -128,7 +128,9 @@ export function Home() {
           >
           Buscar
         </button>
+
       </section>
+      
       <h2 className="text-center py-2 text-lg text-neutral-400">
         Carros novos e usados
       </h2>
@@ -145,7 +147,7 @@ export function Home() {
             </div>
             <img src={item.images[0].url}
               alt={item.name}
-              className="w-full rounded-sm max-h-72 object-contain"
+              className="w-full rounded-sm max-h-72 object-cover"
               onLoad={ () => handleImageLoad(item.id)}
               style={{ display: loadImages.includes(item.id) ? "block" : "none"}}
             />
@@ -155,7 +157,7 @@ export function Home() {
               <span>Ano {item.year} | {item.km} km</span>
             </div>
             <div className="w-full border-1 border-neutral-200 my-2"></div>
-            <div className="w-full flex mb-4">
+            <div className="w-full flex mb-4 pb-2">
               <span>{item.city}</span>
             </div>
           </section>

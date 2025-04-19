@@ -130,7 +130,7 @@ export function CartDetail() {
       )}
 
       {car && (
-        <main className="w-full my-4 p-6 bg-white">
+        <main className="w-full my-4 p-3 bg-white">
           <div className="flex w-full items-center justify-between">
             <h2 className="font-bold">{car?.name}</h2>
             <h2 className="font-bold">{formatedBrl(car?.price)}</h2>

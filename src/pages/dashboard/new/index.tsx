@@ -142,7 +142,7 @@ export function New() {
   return (
     <Container>
       <DashboardHeader />
-
+      <p>Adicione pelo menos 3 imagens do seu carro...</p>
       <div className="w-full bg-white p-3 rounded-md flex flex-col sm:flex-row items-center gap-2">
         <button className="border-2 w-48 rounded-md flex items-center justify-center cursor-pointer border-gray-600 h-32 md:w-48">
           <div className="absolute cursor-pointer">
@@ -154,7 +154,7 @@ export function New() {
         </button>
 
         {carImages.map((item) => (
-          <div key={item.name} className="w-full h-32 flex items-center justify-center relativa">
+          <div key={item.name} className="w-full h-32 flex items-center justify-center relative">
             <button className="absolute" onClick={() => handleDeleteImage(item)}>
               <FiTrash size={28} color="#000" />
             </button>

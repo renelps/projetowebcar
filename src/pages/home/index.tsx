@@ -130,7 +130,7 @@ export function Home() {
         </button>
 
       </section>
-      
+
       <h2 className="text-center py-2 text-lg text-neutral-400">
         Carros novos e usados
       </h2>
@@ -138,22 +138,26 @@ export function Home() {
       <main className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
       {cars.map((item) => (
         <Link to={`/detail/${item.id}`} key={item.id}>
-          <section className="bg-white rounded-sm w-full">
+          <section className="bg-white rounded-md w-full shadow-md p-4">
             <div 
               className="w-full bg-slate-200 rounded-sm h-72"
               style={{ display: loadImages.includes(item.id) ? "none" : "block"}}
             >
 
             </div>
-            <img src={item.images[0].url}
-              alt={item.name}
-              className="w-full rounded-sm max-h-72 object-cover"
-              onLoad={ () => handleImageLoad(item.id)}
-              style={{ display: loadImages.includes(item.id) ? "block" : "none"}}
-            />
+            <div className="w-full h-[260px] overflow-hidden rounded-sm bg-slate-200">
+              <img
+                src={item.images[0].url}
+                alt={item.name}
+                onLoad={() => handleImageLoad(item.id)}
+                style={{ display: loadImages.includes(item.id) ? "block" : "none" }}
+                className="w-full h-full object-cover"
+              />
+            </div>
+
             <p className="font-medium pt-2 pb-4 text-lg">{item.name}</p>
             <div className="flex flex-col justify-center w-full">
-              <strong>{formatedBrl(item.price)}</strong>
+              <p className="font-medium">{formatedBrl(item.price)}</p>
               <span>Ano {item.year} | {item.km} km</span>
             </div>
             <div className="w-full border-1 border-neutral-200 my-2"></div>

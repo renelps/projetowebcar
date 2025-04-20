@@ -32,6 +32,7 @@ interface CarImagesProps {
 export function Dashboard() {
   const [cars, setCars] = useState<CarsProps[]>([])
   const { user } = useContext(AuthContext);
+  const [loadImages, setLoadImages] = useState<string[]>([]);
 
   useEffect(() => {
     function loadCars() {
@@ -92,6 +93,11 @@ export function Dashboard() {
 
   }
 
+  function handleImageLoad(id: string) {
+    setLoadImages((allImages) => [...allImages, id])
+  }
+
+
 
   return (
     <Container>
@@ -107,18 +113,22 @@ export function Dashboard() {
             className="absolute bg-white w-12 h-12 rounded-full flex items-center justify-center right-2 top-2 cursor-pointer">
               <FiTrash2 size={24} color="#000"/>
             </button>
-            <img 
-              src={item.images[0].url}
-              alt=""
-              className="w-full mb-2 max-h-72 object-cover"
-            />
-            <p>{item.name}</p>
+            <div className="w-full h-[260px] overflow-hidden rounded-sm bg-slate-200">
+              <img
+                src={item.images[0].url}
+                alt={item.name}
+                onLoad={() => handleImageLoad(item.id)}
+                style={{ display: loadImages.includes(item.id) ? "block" : "none" }}
+                className="w-full h-full object-cover"
+              />
+            </div>
+            <p className="font-medium pt-2 pb-3">{item.name}</p>
 
             <div className="flex items-center my-1">
               <span>{item.year} | {item.km} km</span>
             </div>
 
-            <strong className="py-10">{formatedBrl(item.price)}</strong>
+            <p className="font-medium">{formatedBrl(item.price)}</p>
 
 
             <div className="w-full bg-slate-300 mt-2 h-px"></div>

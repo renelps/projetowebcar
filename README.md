@@ -1,19 +1,21 @@
-# 🚗 WebCar Full Stack Platform
+# 🚗 WebCar - Plataforma de Venda e Cadastro de Veículos
 
-📅 Junho de 2025 – até o momento
+📅 Abril de 2025 – até o momento
 
-Aplicação completa para gestão de concessionária/site de carros, com funcionalidades robustas de listagem, cadastro, filtros, autenticação e painel administrativo.
+Plataforma web desenvolvida para compra, venda e gerenciamento de veículos. Usuários podem cadastrar seus próprios carros, visualizar catálogo de veículos disponíveis, filtrar por categoria, buscar por nome/modelo e entrar em contato diretamente com os vendedores.
 
 ---
 
-## 💡 Destaques do Projeto
+## 🌟 Destaques do Projeto
 
-* 🔄 Integração sólida entre frontend e backend
-* 🧠 Autenticação segura (login/join)
-* 🖼️ Upload e visualização de imagens de veículos
-* 🗃️ Filtros dinâmicos por marca, modelo, ano e faixa de preço
-* 📦 API RESTful bem estruturada
-* 🔧 Painel administrativo com controle total dos carros
+* 🚘 Catálogo de veículos com paginação
+* 🗃️ Cadastro de carros pelos usuários
+* 🔍 Busca inteligente por nome/modelo
+* 📤 Upload de imagens dos veículos
+* 📬 Integração com WhatsApp para contato com vendedores
+* 📱 Design responsivo e moderno
+* ♻️ Componentização limpa e reutilizável
+* ⚙️ Backend simulado com GraphQL + Faker.js
 
 ---
 
@@ -21,73 +23,51 @@ Aplicação completa para gestão de concessionária/site de carros, com funcion
 
 ### 🖥️ Frontend
 
-* **React** + **TypeScript**
-* **React Router DOM**
+* **Next.js** + **React**
+* **TypeScript**
 * **Styled Components**
 * **Axios**
+* **React Query** (`@tanstack/react-query`)
 
-### 🛠️ Backend
+### 🛠️ Backend (Mock API)
 
-* **Node.js** + **Express**
-* **MongoDB** com **Mongoose**
-* **Multer** + **Cloudinary** (upload de imagens)
-* **CORS**, **Dotenv**, **Postman** (para testes)
-* **JWT** (autenticação via JSON Web Tokens)
+* **JSON GraphQL Server**
+* **GraphQL**
+* **Faker.js**
 
 ---
 
 ## 🚀 Funcionalidades
 
-* 📋 CRUD de veículos (adicionar, editar, remover)
-* 🏷️ Filtros por categoria, preço, ano e marca
-* 🛡️ Autenticação: registro, login e rotas protegidas
-* 🔐 Dashboard exclusivo para admins gerenciarem o catálogo
-* 🖼️ Upload de fotos com preview antes de enviar
-* 📡 Comunicação sólida entre frontend e backend
+* 📦 Listagem de veículos com paginação
+* ➕ Cadastro e exclusão de carros próprios
+* 🔍 Filtro por categoria e busca por nome/modelo
+* 🖼️ Upload de imagem de veículos
+* 📲 Botão de contato com vendedor via WhatsApp
 
 ---
 
 ## 📦 Como Executar o Projeto
 
-### 🔹 Backend
-
 ```bash
-cd backend
+# Clone o repositório
+git clone https://github.com/renelps/projetowebcar.git
+cd projetowebcar
+
+# Instale as dependências
 npm install
-npm run dev
+
+# Inicie o projeto
+yarn dev
 ```
 
-### 🔹 Frontend
-
-```bash
-cd frontend
-npm install
-npm run dev
-```
-
-> Acesse no navegador: [http://localhost:3000](http://localhost:3000)
+Acesse em: [http://localhost:3000](http://localhost:3000)
 
 ---
 
-## 🤝 Como Contribuir
+## 🤝 Agradecimentos
 
-1. Faça fork deste repositório
-2. Crie uma branch:
-
-   ```bash
-   git checkout -b minha-feature
-   ```
-3. Adicione suas mudanças e faça um commit:
-
-   ```bash
-   git commit -m "feat: descrição da feature"
-   ```
-4. Envie para o remoto:
-
-   ```bash
-   git push origin minha-feature
-   ```
-5. Abra um Pull Request e aguarde a análise
+A **Fernanda Kipper** deu aquela força essencial nas dúvidas desse projeto — salvou demais!
 
 ---
 

@@ -8,14 +8,14 @@ Plataforma web desenvolvida para compra, venda e gerenciamento de veículos. Usu
 
 ## 🌟 Destaques do Projeto
 
-* 🚘 Catálogo de veículos com paginação
-* 🗃️ Cadastro de carros pelos usuários
-* 🔍 Busca inteligente por nome/modelo
-* 📤 Upload de imagens dos veículos
-* 📬 Integração com WhatsApp para contato com vendedores
-* 📱 Design responsivo e moderno
-* ♻️ Componentização limpa e reutilizável
-* ⚙️ Backend simulado com GraphQL + Faker.js
+* 🚘 Catálogo de veículos com paginação  
+* 🗃️ Cadastro de carros pelos usuários  
+* 🔍 Busca inteligente por nome/modelo  
+* 📤 Upload de imagens dos veículos  
+* 📬 Integração com WhatsApp para contato com vendedores  
+* 📱 Design responsivo e moderno  
+* ♻️ Componentização limpa e reutilizável  
+* ⚙️ Aplicação com Vite + React
 
 ---
 
@@ -23,26 +23,31 @@ Plataforma web desenvolvida para compra, venda e gerenciamento de veículos. Usu
 
 ### 🖥️ Frontend
 
-* **Next.js** + **React**
+* **React 19**
+* **Vite**
 * **TypeScript**
-* **Styled Components**
-* **Axios**
-* **React Query** (`@tanstack/react-query`)
+* **Tailwind CSS**
+* **React Hook Form**
+* **Zod**
+* **React Router v7**
+* **React Toastify**
+* **Swiper.js**
+* **React Icons**
 
-### 🛠️ Backend (Mock API)
+### 🔧 Outras Tecnologias
 
-* **JSON GraphQL Server**
-* **GraphQL**
-* **Faker.js**
+* **Firebase** – para autenticação ou backend como serviço  
+* **UUID** – geração de identificadores únicos  
+* **ESLint + TypeScript ESLint** – padronização e qualidade de código
 
 ---
 
 ## 🚀 Funcionalidades
 
-* 📦 Listagem de veículos com paginação
-* ➕ Cadastro e exclusão de carros próprios
-* 🔍 Filtro por categoria e busca por nome/modelo
-* 🖼️ Upload de imagem de veículos
+* 📦 Listagem de veículos com paginação  
+* ➕ Cadastro e exclusão de carros próprios  
+* 🔍 Filtro por categoria e busca por nome/modelo  
+* 🖼️ Upload de imagem de veículos  
 * 📲 Botão de contato com vendedor via WhatsApp
 
 ---
@@ -58,19 +63,5 @@ cd projetowebcar
 npm install
 
 # Inicie o projeto
-yarn dev
-```
+npm run dev
 
-Acesse em: [http://localhost:3000](http://localhost:3000)
-
----
-
-## 🤝 Agradecimentos
-
-A **Fernanda Kipper** deu aquela força essencial nas dúvidas desse projeto — salvou demais!
-
----
-
-## 📝 Licença
-
-MIT © ReneLPS
